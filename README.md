@@ -12,13 +12,14 @@ This project is inspired by [mikepm35/TfLambdaDemo](https://github.com/mikepm35/
     `serverless create --template aws-python`.
 3. In order to run TensorFlow, we need to assign a specific version (3.6.5) of Python in its virutal environment by typing
 
-    `virtualenv --python=python3.6.5 tflambdademo`.
+    `virtualenv --python=python3.6.5 tflambdademo` &&
+    `source tflambdademo/bin/activate`
 
 4. For this demo, we are going to pick TensorFlow version 1.13.1. We also can chooser other versions of TensorFlow. However, AWS Lambda has a limitation of *Unzipped size must be smaller than 262144000 bytes*.
 
       For my understanding. v.1.13.1 is a smaller size version. Newer versions of TensorFlow framework are usually larger ones, that might cause us can't upload files to the server. Choosing a version of TensorFlow by inserting the following command,
       
-      `pip install tensorflow==1.13.1` & `pip freeze > requirements.txt`.
+      `pip install tensorflow==1.13.1` && `pip freeze > requirements.txt`.
 
 5. Add `nodeploy` Python packages into the `serverless.yml`, also add `exclude` for the packages which you don't want to be uploaded to the server.
     ```
@@ -29,7 +30,7 @@ This project is inspired by [mikepm35/TfLambdaDemo](https://github.com/mikepm35/
     ```
    After that, your unzip file size will be dropped dramatically, and you should be able to upload this zip file to AWS and without *the unzip file size is too large to upload* problem.
 
-6. Deploy your code via a serverless command,
+6. Deploy your code via a serverless command. (*you must lauch your Docker app in advance.*)
 
     `serverless deploy -v`
 
@@ -56,7 +57,7 @@ This project is inspired by [mikepm35/TfLambdaDemo](https://github.com/mikepm35/
     curl -X POST https://<id>.execute-api.us-east-1.amazonaws.com/dev/infer -d '{"epoch": "1556995xxx", "input": {"age": ["34"], "workclass": ["Private"], "fnlwgt": ["357145"], "education": ["Bachelors"], "education_num": ["13"], "marital_status": ["Married-civ-spouse"], "occupation": ["Prof-specialty"], "relationship": ["Wife"], "race": ["White"], "gender": ["Female"], "capital_gain": ["0"], "capital_loss": ["0"], "hours_per_week": ["50"], "native_country": ["United-States"], "income_bracket": [">50K"]}}'
     ```
 
-    The result will like this
+    The result will look like this
     ```
     [{"logits": [1.088104009628296], "logistic": [0.7480245232582092], "probabilities": [0.25197547674179077, 0.7480245232582092], "class_ids": [1], "classes": ["1"]}]
     ```

@@ -139,6 +139,9 @@ custom:
     zip: true
     slim: true
     noDeploy:
+      - google-pasta
+      - opt-einsum
+      - wrapt
       - absl-py
       - astor
       - gast
