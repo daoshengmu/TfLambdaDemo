@@ -19,8 +19,6 @@ BUCKET = os.environ['BUCKET']
 
 def trainHandler(event, context):
     time_start = time.time()
-    print("event")
-    print(event)
     body = json.loads(event.get('body'))
     # Read in epoch
     epoch_files = body['epoch']
